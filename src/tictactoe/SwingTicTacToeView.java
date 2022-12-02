@@ -41,15 +41,7 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionL
     this.frame.setVisible(true);
     this.frame.setResizable(false);
 
-    this.textField.setBackground(new Color(0, 0, 0));
-    this.textField.setForeground(new Color(255, 255, 255));
-    this.textField.setFont(new Font("Arial", Font.BOLD, 75));
-    this.textField.setHorizontalAlignment(JLabel.CENTER);
-    this.textField.setText("Turn: " + controller.displayTurn());
-    this.textField.setOpaque(true);
-
-    this.textPanel.setLayout(new BorderLayout());
-    this.textPanel.setBounds(0, 0, 600, 100);
+    this.createTitle();
 
     this.gridPanel.setLayout(new GridLayout(3, 3));
     for(int i = 0; i < buttonPanel.length; i++){
@@ -57,14 +49,10 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionL
       this.gridPanel.add(buttonPanel[i]);
       this.buttonPanel[i].setFont(new Font("Arial", Font.BOLD, 60));
       this.buttonPanel[i].setFocusable(false);
-      this.buttonPanel[i].addActionListener((ActionListener) this);
     }
-    this.textPanel.add(textField);
+
     this.frame.add(textPanel, BorderLayout.NORTH);
     this.frame.add(this.gridPanel);
-
-
-
 
     pack();
     //setVisible(true);
@@ -73,7 +61,49 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionL
 
   @Override
   public void addFeatures(TicTacToeFeatures features) {
-    this.buttonPanel[0].addActionListener(evt -> features.playAtPosition(0,0));
+
+    int button = 0;
+
+    for (int i = 0 ; i < 3 ; i++) {
+      for (int j = 0; j < 3; j++){
+        int finalI = i;
+        int finalJ = j;
+        int finalButton = button;
+        this.buttonPanel[button].addActionListener(evt -> features.playAtPosition(finalButton,finalI, finalJ));
+        button++;
+      }
+    }
+  }
+
+
+  @Override
+  public void setTitleText(Player s) {
+
+    String formattedText = s.toString();
+    this.textField.setText("Turn: " + formattedText);
+  }
+
+
+  @Override
+  public void setTextButton(int button, String text) {
+    buttonPanel[button].setText(text);
+  }
+
+  /**
+   * Format the title once, and we can use this to show data
+   */
+  private void createTitle(){
+    this.textField.setBackground(new Color(0, 0, 0));
+    this.textField.setForeground(new Color(255, 255, 255));
+    this.textField.setFont(new Font("Arial", Font.BOLD, 75));
+    this.textField.setHorizontalAlignment(JLabel.CENTER);
+    this.textField.setOpaque(true);
+
+    this.textPanel.setLayout(new BorderLayout());
+    this.textPanel.setBounds(0, 0, 600, 100);
+
+    this.textPanel.add(this.textField);
+    this.setTitleText(controller.displayTurn());
   }
 
 
@@ -101,15 +131,18 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionL
 
   @Override
   public void actionPerformed(ActionEvent e) {
+
+
     for (int i = 0; i < 9; i++){
       if(e.getSource() == this.buttonPanel[i]){
         int row = i / 3 + 1;
         int col = i % 3 + 1;
         if(buttonPanel[i].getText() == ""){
           buttonPanel[i].setForeground(new Color(0, 0, 0));
-          buttonPanel[i].setText("X");
+
           //This is where bugs occur
-          String str = this.controller.playAtPosition(row, col);
+//          String str = this.controller.playAtPosition(row, col);
+//          buttonPanel[i].setText(str);
 
 
         }

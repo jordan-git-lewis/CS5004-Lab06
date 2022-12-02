@@ -6,7 +6,7 @@ public interface TicTacToeFeatures {
 
   void exitProgram();
 
-  String playAtPosition(int row, int col);
+  String playAtPosition(int button, int row, int col);
 
   void restartGame();
 

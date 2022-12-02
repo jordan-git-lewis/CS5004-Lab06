@@ -52,9 +52,11 @@ public class TicTacToeController implements TicTacToeFeatures{
   }
 
   @Override
-  public String playAtPosition(int row, int col) {
+  public String playAtPosition(int button, int row, int col) {
     String temp = "" + displayTurn();
     model.move(row, col);
+    view.setTextButton(button, temp);
+    view.setTitleText(this.displayTurn());
     return temp;
   }
 

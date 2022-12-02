@@ -55,6 +55,16 @@ public class TicTacToeController implements TicTacToeFeatures{
     try {
       String temp = "" + displayTurn();
       model.move(row, col);
+      if (model.isGameOver()){
+        if(model.getWinner() != null){
+          view.setTextButton(button, temp);
+          view.setTitleText(this.displayTurn());
+          return "" + model.getWinner();
+        }
+        else{
+          return null;
+        }
+      }
       view.setTextButton(button, temp);
       view.setTitleText(this.displayTurn());
       return temp;

@@ -8,6 +8,9 @@ public interface TicTacToeView {
    */
   void setEchoOutput(String s);
 
+  /**
+   * Resets the focus following a button press
+   */
   void resetFocus();
 
   void addFeatures(TicTacToeFeatures features);

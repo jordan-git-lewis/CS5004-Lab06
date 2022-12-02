@@ -17,6 +17,9 @@ public interface TicTacToeFeatures {
    */
   String playAtPosition(int button, int row, int col);
 
+  /**
+   * Allows users to reset the game without having to rerun the application
+   */
   void restartGame();
 
   /**

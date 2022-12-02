@@ -42,6 +42,7 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionL
     this.frame.setResizable(false);
 
     this.createTitle();
+    this.setTitleText(controller.displayTurn());
 
     this.gridPanel.setLayout(new GridLayout(3, 3));
     for(int i = 0; i < buttonPanel.length; i++){
@@ -103,7 +104,7 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionL
     this.textPanel.setBounds(0, 0, 600, 100);
 
     this.textPanel.add(this.textField);
-    this.setTitleText(controller.displayTurn());
+
   }
 
 

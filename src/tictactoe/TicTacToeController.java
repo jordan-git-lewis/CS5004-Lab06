@@ -1,5 +1,7 @@
 package tictactoe;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -54,14 +56,25 @@ public class TicTacToeController implements TicTacToeFeatures{
   @Override
   public String playAtPosition(int button, int row, int col) {
     String temp = "" + displayTurn();
-    model.move(row, col);
-    view.setTextButton(button, temp);
-    view.setTitleText(this.displayTurn());
+    try {
+      model.move(row, col);
+      view.setTextButton(button, temp);
+      view.setTitleText(this.displayTurn());
+    } catch (Exception e) {
+//      view.displayMessage(e.getMessage());
+    }
+
     return temp;
   }
 
   @Override
   public void restartGame() {
+
+    //view cleaning
+    view.cleanBoard();
+
+    //Model cleaning
+    model.cleanBoard();
 
   }
 

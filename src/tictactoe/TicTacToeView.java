@@ -24,5 +24,10 @@ public interface TicTacToeView {
    * @param s Text to display at the top
    */
   void setTitleText(Player s);
+
+  /**
+   * Clean the board and reset the game
+   */
+  void cleanBoard();
 }
 

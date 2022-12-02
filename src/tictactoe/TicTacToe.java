@@ -58,4 +58,8 @@ public interface TicTacToe {
    */
   Player getMarkAt(int r, int c);
 
+  /**
+   * Clean the board and reset the game
+   */
+  void cleanBoard();
 }

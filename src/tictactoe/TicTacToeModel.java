@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  */
 public class TicTacToeModel implements TicTacToe {
 
-  private final Player[][] board;
+  private Player[][] board;
   private int turnCount;
   // List of constants
   private final static int MAXTURNS = 9;
@@ -199,5 +199,11 @@ public class TicTacToeModel implements TicTacToe {
      }
      return String.join("\n-----------\n", rows);
      ************/
+  }
+
+  @Override
+  public void cleanBoard() {
+    this.board = new Player[COLUMNSIZE][ROWSIZE];
+    this.turnCount = 1;
   }
 }

@@ -16,15 +16,19 @@ public class TicTacToeController implements TicTacToeFeatures{
    * A constructor for the tictactoe console. The console is comprised of a Readable input and the
    * appendable output for testing
    *
-   * @param model  the read in input
+   * @param model  the model we are connecting to the controller, of type TicTacToe
    */
   public TicTacToeController(TicTacToe model) {
     if (model == null) {
-      throw new IllegalArgumentException("Invalid input target, cannot be null");
+      throw new IllegalArgumentException("Invalid model input, cannot be null");
     }
     this.model = model;
   }
 
+  /**
+   * Sets the view and adds the features from the controller/TicTacToe Features interface
+   * @param v the view to implement
+   */
   public void setView(TicTacToeView v){
     view = v;
     view.addFeatures(this);
@@ -42,22 +46,21 @@ public class TicTacToeController implements TicTacToeFeatures{
   }
 
   @Override
-  public void echoOutput(String typed) {
-
-  }
-
-  @Override
   public void exitProgram() {
     System.exit(0);
   }
 
   @Override
   public String playAtPosition(int button, int row, int col) {
-    String temp = "" + displayTurn();
-    model.move(row, col);
-    view.setTextButton(button, temp);
-    view.setTitleText(this.displayTurn());
-    return temp;
+    try {
+      String temp = "" + displayTurn();
+      model.move(row, col);
+      view.setTextButton(button, temp);
+      view.setTitleText(this.displayTurn());
+      return temp;
+    }catch (Exception e){
+      return null;
+    }
   }
 
   @Override

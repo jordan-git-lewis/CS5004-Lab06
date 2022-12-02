@@ -15,10 +15,9 @@ public class TicTacToeController implements TicTacToeFeatures{
   private TicTacToeView view;
 
   /**
-   * A constructor for the tictactoe console. The console is comprised of a Readable input and the
-   * appendable output for testing
+   * A constructor for the tictactoe console. The console is comprised of TicTacToe model
    *
-   * @param model  the read in input
+   * @param model the model we are connecting to the controller, of type TicTacToe
    */
   public TicTacToeController(TicTacToe model) {
     if (model == null) {
@@ -27,25 +26,13 @@ public class TicTacToeController implements TicTacToeFeatures{
     this.model = model;
   }
 
+  /**
+   * Sets the view and adds the features from the controller/TicTacToe Features interface
+   * @param v the view to implement
+   */
   public void setView(TicTacToeView v){
     view = v;
     view.addFeatures(this);
-  }
-
-
-  /**
-   * Execute a single game of tic tac toe given a tic tac toe Model. When the game is over, the
-   * playGame method ends.
-   *
-   */
-  @Override
-  public void playGame() {
-
-  }
-
-  @Override
-  public void echoOutput(String typed) {
-
   }
 
   @Override
@@ -68,6 +55,15 @@ public class TicTacToeController implements TicTacToeFeatures{
   }
 
   @Override
+  public boolean isGameOver(){
+    return model.isGameOver();
+  }
+  @Override
+  public Player displayWinner(){
+    return model.getWinner();
+  }
+
+  @Override
   public void restartGame() {
 
     //view cleaning
@@ -75,7 +71,8 @@ public class TicTacToeController implements TicTacToeFeatures{
 
     //Model cleaning
     model.cleanBoard();
-
+    //Reset Title
+    view.setTitleText(Player.X);
   }
 
   @Override

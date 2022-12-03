@@ -170,12 +170,12 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView {
   private void addFacesToBoard() {
     try {
 
-      ImageIcon icon = new ImageIcon("res/femi.png");
+      ImageIcon icon = new ImageIcon(this.getClass().getClassLoader().getResource("femi.png"));
       Image image = icon.getImage();
       Image image2 = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
       femi = new ImageIcon(image2);
 
-      icon = new ImageIcon("res/jordan.png");
+      icon = new ImageIcon(this.getClass().getClassLoader().getResource("jordan.png"));
       image = icon.getImage();
       image2 = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
       jordan = new ImageIcon(image2);

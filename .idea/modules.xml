@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CS5004-Lab06.iml" filepath="$PROJECT_DIR$/CS5004-Lab06.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TicTacToe.iml" filepath="$PROJECT_DIR$/TicTacToe.iml" />
     </modules>
   </component>
 </project>

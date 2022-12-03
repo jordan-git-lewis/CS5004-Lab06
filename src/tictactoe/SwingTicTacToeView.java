@@ -157,7 +157,6 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView {
     for (int i = 0; i < buttonPanel.length; i++) {
       this.buttonPanel[i] = new JButton();
       this.gridPanel.add(buttonPanel[i]);
-      this.buttonPanel[i].setFont(new Font("Arial", Font.BOLD, 60));
       this.buttonPanel[i].setFocusable(false);
     }
 

@@ -15,6 +15,5 @@ public class Main {
     TicTacToeController c = new TicTacToeController(m);
     TicTacToeView v = new SwingTicTacToeView("Tic-Tac-Toe", c);
     c.setView(v);
-    c.playGame();
   }
 }

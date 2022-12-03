@@ -6,12 +6,12 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import javax.swing.*;
 
-public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionListener {
+/**
+ * The class that implements the view for our TicTacToe game. This view utilizes Java Swing and
+ * displays our game on a 3x3 grid of clickable buttons
+ */
+public class SwingTicTacToeView extends JFrame implements TicTacToeView {
 
-  //private final JLabel display;
-
-  //private final JButton echoButton;
-  //private final JButton exitButton;
   TicTacToeController controller;
   JFrame frame;
   JPanel textPanel = new JPanel();
@@ -23,13 +23,22 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionL
   ImageIcon jordan;
   ImageIcon femi;
 
+  /**
+   * The constructor for our TicTacToe view. It comprised of a caption, which acts as the title for
+   * our application and a TicTacToe controller, which relays the inputs from our view to our
+   * TicTacToe model
+   *
+   * @param caption    The title of our frame
+   * @param controller The TicTacToe controller to connect to the view
+   */
   public SwingTicTacToeView(String caption, TicTacToeController controller) {
     super(caption);
 
-
+    this.controller = controller;
+    // Create the main frame that our buttons and text will display on
     this.frame = new JFrame(caption);
     this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.frame.setSize(600, 600);
+    this.frame.setSize(800, 800);
     //this.setLocation(400, 200);
     this.frame.setLayout(new BorderLayout());
     this.frame.setVisible(true);
@@ -47,7 +56,6 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionL
     //Add Faces
     this.addFacesToBoard();
 
-
     pack();
     //setVisible(true);
 
@@ -64,10 +72,13 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionL
 
     //Iteration button
     int button = 0;
-    for (int i = 0 ; i < 3 ; i++) {
-      for (int j = 0; j < 3; j++){
-        int finalI = i; int finalJ = j; int finalButton = button;
-        this.buttonPanel[button].addActionListener(evt -> features.playAtPosition(finalButton,finalI, finalJ));
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        int finalI = i;
+        int finalJ = j;
+        int finalButton = button;
+        this.buttonPanel[button].addActionListener(
+            evt -> features.playAtPosition(finalButton, finalI, finalJ));
         button++;
       }
     }
@@ -76,21 +87,34 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionL
 
   @Override
   public void setTitleText(Player s) {
-    this.textField.setText("Turn: " + (s.toString().equals("X")? "Femi" : "Jordan"));
+
+    if (!controller.isGameOver()){
+      this.textField.setText("Turn: " + (s.toString().equals("X") ? "Femi" : "Jordan"));
+    }
+    else{
+      if (controller.displayWinner() == null){
+        this.textField.setText("Tie Game! No Winners");
+      }
+      else{
+        String winner = controller.displayWinner().toString();
+        this.textField.setText("Game Over! " + (winner.equals("X") ? "Femi" : "Jordan") + " Wins!");
+      }
+    }
+
   }
 
 
   @Override
   public void setTextButton(int button, String text) {
 //    buttonPanel[button].setText(text);
-    buttonPanel[button].setIcon(text.equals("X")? this.femi : this.jordan);
+    buttonPanel[button].setIcon(text.equals("X") ? this.femi : this.jordan);
 
   }
 
   /**
    * Format the title once, and we can use this to show data
    */
-  private void createTitle(){
+  private void createTitle() {
 
     this.textField.setBackground(new Color(0, 0, 0));
     this.textField.setForeground(new Color(255, 255, 255));
@@ -117,7 +141,7 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionL
     this.restartButton.setText("Restart");
 
     //Buttons Area
-    JPanel panel= new JPanel();
+    JPanel panel = new JPanel();
     panel.add(quitButton);
     panel.add(restartButton);
 
@@ -130,7 +154,7 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionL
   private void addBoard() {
 
     this.gridPanel.setLayout(new GridLayout(3, 3));
-    for(int i = 0; i < buttonPanel.length; i++){
+    for (int i = 0; i < buttonPanel.length; i++) {
       this.buttonPanel[i] = new JButton();
       this.gridPanel.add(buttonPanel[i]);
       this.buttonPanel[i].setFont(new Font("Arial", Font.BOLD, 60));
@@ -144,16 +168,16 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionL
    * Add faces to the board, that way we just need to calculate once
    */
   private void addFacesToBoard() {
-    try{
+    try {
 
-      ImageIcon icon = new ImageIcon("res/femi.png");
+      ImageIcon icon = new ImageIcon(this.getClass().getClassLoader().getResource("femi.png"));
       Image image = icon.getImage();
-      Image image2 = image.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH);
+      Image image2 = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
       femi = new ImageIcon(image2);
 
-      icon = new ImageIcon("res/jordan.png");
+      icon = new ImageIcon(this.getClass().getClassLoader().getResource("jordan.png"));
       image = icon.getImage();
-      image2 = image.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH);
+      image2 = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
       jordan = new ImageIcon(image2);
 
     } catch (Exception ex) {
@@ -161,17 +185,6 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionL
     }
   }
 
-
-  /*
-    In order to make this frame respond to keyboard events, it must be within strong focus.
-    Since there could be multiple components on the screen that listen to keyboard events,
-    we must set one as the "currently focussed" one so that all keyboard events are
-    passed to that component. This component is said to have "strong focus".
-
-    We do this by first making the component focusable and then requesting focus to it.
-    Requesting focus makes the component have focus AND removes focus from whoever had it
-    before.
-  */
   @Override
   public void resetFocus() {
     this.setFocusable(true);
@@ -179,36 +192,11 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView, ActionL
   }
 
   @Override
-  public void setEchoOutput(String s) {
-    //display.setText(s);
-  }
-
-  @Override
-  public void cleanBoard(){
+  public void cleanBoard() {
 
     ImageIcon icon = new ImageIcon("");
     Arrays.stream(this.buttonPanel).forEach(x -> x.setIcon(icon));
     setTitleText(Player.X);
   }
 
-  @Override
-  public void actionPerformed(ActionEvent e) {
-
-
-    for (int i = 0; i < 9; i++){
-      if(e.getSource() == this.buttonPanel[i]){
-        int row = i / 3 + 1;
-        int col = i % 3 + 1;
-        if(buttonPanel[i].getText() == ""){
-          buttonPanel[i].setForeground(new Color(0, 0, 0));
-
-          //This is where bugs occur
-//          String str = this.controller.playAtPosition(row, col);
-//          buttonPanel[i].setText(str);
-
-
-        }
-      }
-    }
-  }
 }

@@ -1,8 +1,7 @@
 package tictactoe;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.Arrays;
 import javax.swing.*;
 
@@ -107,7 +106,8 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView {
   @Override
   public void setTextButton(int button, String text) {
 //    buttonPanel[button].setText(text);
-    buttonPanel[button].setIcon(text.equals("X") ? this.femi : this.jordan);
+    //Switch sides if X jordan
+    buttonPanel[button].setIcon(text.equals("X") ? this.jordan : this.femi);
 
   }
 
@@ -170,26 +170,26 @@ public class SwingTicTacToeView extends JFrame implements TicTacToeView {
   private void addFacesToBoard() {
     try {
 
-      ImageIcon icon = new ImageIcon(this.getClass().getClassLoader().getResource("femi.png"));
-      Image image = icon.getImage();
-      Image image2 = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
-      femi = new ImageIcon(image2);
+      URL femiPath = this.getClass().getClassLoader().getResource("femi.png");
+      if(femiPath != null) {
+        ImageIcon icon = new ImageIcon(femiPath);
+        Image image = icon.getImage();
+        Image image2 = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+        femi = new ImageIcon(image2);
+      }
 
-      icon = new ImageIcon(this.getClass().getClassLoader().getResource("jordan.png"));
-      image = icon.getImage();
-      image2 = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
-      jordan = new ImageIcon(image2);
-
+      URL jordanPath = this.getClass().getClassLoader().getResource("jordan.png");
+      if(jordanPath != null) {
+        ImageIcon icon = new ImageIcon(jordanPath);
+        Image image = icon.getImage();
+        Image image2 = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+        jordan = new ImageIcon(image2);
+      }
     } catch (Exception ex) {
-      System.out.println(ex);
+      //TODO add additional behaviour
     }
   }
 
-  @Override
-  public void resetFocus() {
-    this.setFocusable(true);
-    this.requestFocus();
-  }
 
   @Override
   public void cleanBoard() {

@@ -1,21 +1,16 @@
 package tictactoe;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 /**
- * The class representation for a tictactoe controller
+ * The class representation for a TicTacToe controller
  */
 public class TicTacToeController implements TicTacToeFeatures{
 
-  private TicTacToe model;
+  private final TicTacToe model;
   private TicTacToeView view;
 
   /**
-   * A constructor for the tictactoe console. The console is comprised of TicTacToe model
+   * A constructor for the TicTacToe console.
    *
    * @param model the model we are connecting to the controller, of type TicTacToe
    */
@@ -41,17 +36,16 @@ public class TicTacToeController implements TicTacToeFeatures{
   }
 
   @Override
-  public String playAtPosition(int button, int row, int col) {
-    String temp = "" + displayTurn();
+  public void playAtPosition(int button, int row, int col) {
+
     try {
       model.move(row, col);
-      view.setTextButton(button, temp);
+      view.setTextButton(button, "" + displayTurn());
       view.setTitleText(this.displayTurn());
     } catch (Exception e) {
 //      view.displayMessage(e.getMessage());
     }
 
-    return temp;
   }
 
   @Override

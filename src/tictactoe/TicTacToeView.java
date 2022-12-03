@@ -2,8 +2,6 @@ package tictactoe;
 
 public interface TicTacToeView {
 
-  void resetFocus();
-
   void addFeatures(TicTacToeFeatures features);
 
   /**
